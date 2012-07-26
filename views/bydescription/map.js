@@ -1,0 +1,4 @@
+function(doc) {
+  if(doc.earth_description.munsel)
+  emit(doc._id, [doc.earth_description.munsel,doc.earth_description.texture, doc.earth_description.shape_a,doc.earth_description.shape_sr,doc.earth_description.shape_r, doc.earth_description.shape_as,doc.earth_description.hardness,doc.earth_description.compactness_description_1,doc.earth_description.compactness_description_2, doc.earth_description.wetness_description, doc.earth_description.structure, doc.earth_description.length, doc.earth_description.width, doc.earth_description.lower_depth, doc.earth_description.upper_depth, doc.earth_description.direction, doc.earth_description.slope, doc.earth_description.pebbles,doc.earth_description.cobbles,doc.earth_description.boulders, doc.earth_description.stone_distribution]);
+}
