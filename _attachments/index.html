@@ -7,9 +7,45 @@
          <script type="text/javascript" src="Getit.js"></script>
          <script type="text/javascript" charset="utf-8"></script>
 	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
-		
-
-
+	<link rel="stylesheet" href="css/prettyPhoto.css" type="text/css" media="screen" title="prettyPhoto main stylesheet" charset="utf-8" />        
+        
+ <style type="text/css" media="screen">
+			* { margin: 0; padding: 0; }
+			
+			
+			
+			h1 { font-family: Georgia; font-style: italic; margin-bottom: 10px; }
+			
+			h2 {
+				font-family: Georgia;
+				font-style: italic;
+				margin: 25px 0 5px 0;
+			}
+			
+			p { font-size: 1.2em; }
+			
+			ul.gallery.clearfix li { display: inline; }
+			
+			.wide {
+				border-bottom: 1px #000 solid;
+				width: 4000px;
+			}
+			
+			.fleft { float: left; margin: 0 20px 0 0; }
+			
+			.cboth { clear: both; }
+			
+			#main {
+				background: #fff;
+				margin: 0 auto;
+				padding: 30px;
+				width: 80%;
+			}
+		</style>       
+        
+        
+        
+        
 <style type="text/css">
 <!--
 body {
@@ -226,12 +262,26 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
 			<p>Please, Select a Field from the sidebar!</p>
 		</div>
                 <div id='tab4'>
-			<h3>Section 1</h3>
+			<h3>Section 4</h3>
 			<p>Please, Select a Field from the sidebar!</p>
 		</div>
                 <div id='tab5'>
-			<h3>Section 1</h3>
-			<p>Please, Select a Field from the sidebar!</p>
+                    <div id="main">
+			<h3>Photos</h3>
+			<ul class="gallery clearfix">
+                        </ul>
+
+			<h2> 2</h2>
+			<ul id="photos_list" class="gallery clearfix">
+				<li><a href="http://128.54.59.236/photos/work.gif" rel="prettyPhoto[gallery2]" title="How is the description on that one? How is the description on that one? How is the description on that one? "><img src="http://128.54.59.236/photos/work.gif" width="60" height="60" alt="This is a pretty long title" /></a></li>
+				<li><a href="http://128.54.59.236/photos/4.jpg" rel="prettyPhoto[gallery2]" title="Description on a single line."><img src="http://128.54.59.236/photos/4.jpg" width="60" height="60" alt="" /></a></li>
+				<li><a href="http://128.54.59.236/photos/5.jpg" rel="prettyPhoto[gallery2]"><img src="http://128.54.59.236/photos/5.jpg" width="60" height="60" alt="" /></a></li>
+				<li><a href="http://128.54.59.236/photos/1.jpg" rel="prettyPhoto[gallery2]"><img src="http://128.54.59.236/photos/1.jpg" width="60" height="60" alt="" /></a></li>
+				<li><a href="http://128.54.59.236/photos/2.jpg" rel="prettyPhoto[gallery2]"><img src="http://128.54.59.236/photos/2.jpg" width="60" height="60" alt="" /></a></li>
+                                <li><a href="http://128.54.59.236/photos/work.gif" rel="prettyPhoto[gallery2]" title="How is the description on that one? How is the description on that one? How is the description on that one? "><img src="http://128.54.59.236/photos/work.gif" width="60" height="60" alt="This is a pretty long title" /></a></li>
+                                <li></li>
+			</ul>
+                    </div>
 		</div>
                 <div id='tab6'>
 			<h3>Section 1</h3>
@@ -272,8 +322,9 @@ ul.nav a { zoom: 1; }  /* the zoom property gives IE the hasLayout trigger it ne
     
     <!-- end .content --></div>
   <div class="footer">
-    <p>This .footer contains the declaration position:relative; to give Internet Explorer 6 hasLayout for the .footer and cause it to clear correctly. If you're not required to support IE6, you may remove it.</p>
+    <p></p>
     <!-- end .footer --></div>
   <!-- end .container --></div>
 </body>
+    <script src="js/jquery.prettyPhoto.js" type="text/javascript" charset="utf-8"></script>
 </html>

@@ -24,7 +24,7 @@ var field_passed;
 var square_passed;
 
 function display_fields(){
-    db.view("Opendig_v1/byfield", {
+    db.view("Opendig_v2/byfield", {
         
         success: function(data){
             
@@ -53,7 +53,7 @@ function display_fields(){
 }
 
 function display_squares(id){
-    db.view("Opendig_v1/bysquare",{
+    db.view("Opendig_v2/bysquare",{
         success: function(data){
             for(i in data.rows){
                 var change;
@@ -73,7 +73,7 @@ function display_squares(id){
 }
 // need modify !!
 function display_locus(sq, fd){
-    db.view("Opendig_v1/bylocuscode",{
+    db.view("Opendig_v2/bylocuscode",{
         success: function(data){
             
             var change1;
@@ -100,7 +100,7 @@ function display_locus(sq, fd){
 
 function display_table(sq,fd,id){
     
-    db.view("Opendig_v1/byshowtable",{
+    db.view("Opendig_v2/byshowtable",{
         success: function(data){
             var code_and_locus= id.split(' ');
             var code=code_and_locus[0];
@@ -131,9 +131,10 @@ function display_table(sq,fd,id){
 }
 
 function display_identification_info(id){
-    db.view("Opendig_v1/bygeneral_info",{
+    db.view("Opendig_v2/bygeneral_info",{
         
         success: function(data){
+            $("#tab1").append("<h2>Identification</h2>");
             $("#tab1").append("<fieldset><table id='id_table'></table></fieldset> ");
             var key=id.split('_');
             var test=1;
@@ -159,7 +160,7 @@ function display_identification_info(id){
     });
 }
 function display_description_info(id){
-    db.view("Opendig_v1/bydescription",{
+    db.view("Opendig_v2/bydescription",{
         success: function(data){
             
         $("#tab2").append("<h2>Description</h2>");
@@ -176,7 +177,140 @@ function display_description_info(id){
             
         },
         error: function(status){
-            $("#tab1").append("<p>The status is "+status+" in displaying description information</p>");
+            $("#tab2").append("<p>The status is "+status+" in displaying description information</p>");
+        },
+        reduce: false
+    });
+    
+}
+function display_levels_info(id){
+    db.view("Opendig_v2/bylevels",{
+        success: function(data){
+            
+        $("#tab3").append("<h2>Levels</h2>");
+        $("#tab3").append("<table id='table_levels'></table> ");
+        $("#table_levels").append("<tr><th>Location</th><th>Top level</th><th>Bottom level</th></tr>");
+        var key=id.split('_');
+       
+        for(i in data.rows){
+            
+            if(data.rows[i].key==key[1]){
+                //alert('The length is '+data.rows[i].value[1].location);
+                for(j=0;j<data.rows[i].value.length;j++){
+                    if(data.rows[i].value[j].top_level=="" || data.rows[i].value[j].top_level==null || data.rows[i].value[j].bottom_level=="" || data.rows[i].value[j].top_level==null){
+                        data.rows[i].value[j].top_level=="no level";  
+                        data.rows[i].value[j].bottom_level=="no level"; 
+                    }
+                      
+                        
+                    $("#table_levels").append("<tr><td>"+data.rows[i].value[j].location+"</td><td>"+data.rows[i].value[j].top_level+"</td><td>"+data.rows[i].value[j].bottom_level+"</td></tr>");
+                }
+                
+            }
+        }
+            
+        },
+        error: function(status){
+            $("#tab3").append("<p>The status is "+status+" in displaying levels information</p>");
+        },
+        reduce: false
+    });
+    
+}
+
+function display_stratigraphies_info(id){
+    db.view("Opendig_v2/bystratigraphies",{
+        success: function(data){
+            
+        $("#tab6").append("<h2>stratigraphies</h2>");
+        $("#tab6").append("<table id='table_stratigraphies'></table> ");
+        $("#table_stratigraphies").append("<tr><th>Type</th><th>Description</th><th>Related locus</th></tr>");
+        var key=id.split('_');
+       
+        for(i in data.rows){
+            
+            if(data.rows[i].key==key[1]){
+              
+                for(j=0;j<data.rows[i].value.length;j++){
+                      
+                    $("#table_stratigraphies").append("<tr><td>"+data.rows[i].value[j].is_related+"</td><td>"+data.rows[i].value[j].related+"</td><td>"+data.rows[i].value[j].related_locus+"</td></tr>");
+                }
+                
+            }
+        }
+            
+        },
+        error: function(status){
+            $("#tab6").append("<p>The status is "+status+" in displaying stratigraphies information</p>");
+        },
+        reduce: false
+    });
+    
+}
+
+
+function display_pails_info(id){
+    db.view("Opendig_v2/bypails",{
+        success: function(data){
+           
+        $("#tab4").append("<h2>Pails</h2>");
+        $("#tab4").append("<table id='table_pails'></table> ");
+        $("#table_pails").append("<tr><th>Date</th><th>pail</th><th>Baskets</th><th>diagnostic</th><th>Publish</th><th>Total count</th><th>Location</th><th>Comment</th></tr>");
+        var key=id.split('_');
+       
+        for(i in data.rows){
+            
+            if(data.rows[i].key==key[1]){
+              
+                for(j=0;j<data.rows[i].value.length;j++){
+                    
+                  if(data.rows[i].value[j].pottery_location==null){
+                      
+                      data.rows[i].value[j].pottery_location=" ";
+                  }
+                  if(data.rows[i].value[j].pottery_comments==null){
+                      
+                      data.rows[i].value[j].pottery_comments=" ";
+                  }                 
+                      
+                    $("#table_pails").append("<tr><td>"+data.rows[i].value[j].pail_date+"</td><td>"+data.rows[i].value[j].pail_number+"</td><td>"+data.rows[i].value[j].baskets+"</td><td>"+data.rows[i].value[j].diagnostic_count+"</td><td>"+data.rows[i].value[j].publish+"</td><td>"+data.rows[i].value[j].total_count+"</td><td>"+data.rows[i].value[j].pottery_location+"</td><td>"+data.rows[i].value[j].pottery_comments+"</td></tr>");
+                }
+                
+            }
+        }
+            
+        },
+        error: function(status){
+            $("#tab4").append("<p>The status is "+status+" in displaying pails information</p>");
+        },
+        reduce: false
+    });
+    
+}
+
+function display_photos_info(id){
+    db.view("Opendig_v2/byphotos",{
+        success: function(data){
+            
+        
+        var key=id.split('_');
+       
+        for(i in data.rows){
+            
+            if(data.rows[i].key==key[1]){
+              
+                $("#photos_list").append('<li><a href="http://128.54.59.236/photos/work.gif" rel="prettyPhoto[gallery2]" title="How is the description on that one? How is the description on that one? How is the description on that one? "><img src="http://128.54.59.236/photos/work.gif" width="60" height="60" alt="This is a pretty long title" /></a></li>'); 
+                for(j=0;j<data.rows[i].value.length;j++){
+                      
+                    
+                }
+                
+            }
+        }
+            
+        },
+        error: function(status){
+            $("#tab5").append("<p>The status is "+status+" in displaying photos information</p>");
         },
         reduce: false
     });
@@ -286,7 +420,13 @@ $(document).ready(function (){
 
         $("#tab2").empty();
         display_description_info(id);
-      
+        $("#tab3").empty();
+        display_levels_info(id);
+        $("#tab6").empty();
+        display_stratigraphies_info(id);        
+        $("#tab4").empty();        
+        display_pails_info(id);
+        display_photos_info(id);
     });
     
 
@@ -294,10 +434,7 @@ $(document).ready(function (){
 
 
 
-
-
-
-
+//Tab code
 
 $('table.tap').each(function(){
 
@@ -419,7 +556,23 @@ e.preventDefault();
 				});
 
 
+//Photo gallery code (khalied)
 
+
+//$(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',theme:'light_square',slideshow:3000, autoplay_slideshow: true});
+$(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'fast',slideshow:10000, hideflash: true});
+		
+$("#custom_content a[rel^='prettyPhoto']:first").prettyPhoto({
+custom_markup: '<div id="map_canvas" style="width:260px; height:265px"></div>',
+changepicturecallback: function(){ initialize(); }
+});
+
+$("#custom_content a[rel^='prettyPhoto']:last").prettyPhoto({
+custom_markup: '<div id="bsap_1259344" class="bsarocks bsap_d49a0984d0f377271ccbf01a33f2b6d6"></div><div id="bsap_1237859" class="bsarocks bsap_d49a0984d0f377271ccbf01a33f2b6d6" style="height:260px"></div><div id="bsap_1251710" class="bsarocks bsap_d49a0984d0f377271ccbf01a33f2b6d6"></div>',
+changepicturecallback: function(){ _bsap.exec(); }
+});
+
+//here Ends photo gallerie code
 
 });
 
