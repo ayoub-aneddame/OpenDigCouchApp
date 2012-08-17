@@ -4,6 +4,7 @@
  */
 //Global variable
 var $active, $content;
+var photos_arr = [];
 function ChangeColor(tableRow, highlight){
     
     if (highlight)
@@ -39,6 +40,7 @@ function display_fields(){
                 
             }
             
+            $("#field.nav").append("<li><a href='admin.html' id='admin'>Admin</a></li>");
         },
         
         error: function(status){
@@ -63,6 +65,7 @@ function display_squares(id){
                 }
                  
             }
+             $("#field2.nav").append("<li><a href='admin.html' id='admin'>Admin</a></li>");
         },
         error: function(status){
           alert("the status is "+status+" in display squares");  
@@ -79,7 +82,7 @@ function display_locus(sq, fd){
             var change1;
             var change2="";
             
-            for(i in data.rows){
+            for(i in data.rows){ 
                 
                   if(data.rows[i].value[0]==sq && data.rows[i].value[1]==fd && (data.rows[i].key[0] != change1 || data.rows[i].key[1] != change2)){
                        
@@ -89,6 +92,7 @@ function display_locus(sq, fd){
                 }
                  
             }
+             $("#field3.nav").append("<li><a href='admin.html' id='admin'>Admin</a></li>");
         },
         error: function(status){
           alert("the status is "+status+" in display locus");  
@@ -146,7 +150,7 @@ function display_identification_info(id){
                 
                 
                 if(data.rows[i].key==key[1]){
-                    $("#id_table").append("<tr><td>Start Date</td><td>"+data.rows[i].value.start_date+"</td></tr><tr><td>End Date</td><td>"+data.rows[i].value.end_date+"</td></tr><tr><td>Site</td><td>Umayri</td></tr><tr><td>Field</td><td>"+data.rows[i].value.field+"</td></tr><tr><td>Square</td><td>"+data.rows[i].value.square+"</td></tr><tr><td>Code</td><td>"+data.rows[i].value.code+"</td></tr><tr><td>Supervisor</td><td>"+data.rows[i].value.supervisor+"</td></tr><tr><td>Designation</td><td>"+data.rows[i].value.designation+"</td></tr><tr><td>Reason</td><td>"+data.rows[i].value.reason+"</td></tr><tr><td>Top Separability</td><td>"+data.rows[i].value.top_separation+"</td></tr><tr><td>Bottom Separability</td><td>"+data.rows[i].value.bottom_separation+"</td></tr><tr><td>Interpretation</td><td></td></tr><tr><td>Stratigraphy</td><td>"+data.rows[i].value.stratigraphy_remarks+"</td></tr><tr><td>Locus date</td><td>"+data.rows[i].value.age+"</td></tr><tr><td>Top Plans</td><td>"+data.rows[i].value.top_plan+"</td></tr><tr><td>Draw balks</td><td>"+data.rows[i].value.draw_balks+"</td></tr>");
+                    $("#id_table").append("<tr><td>Start Date</td><td>"+data.rows[i].value[0]+"</td></tr><tr><td>End Date</td><td>"+data.rows[i].value[1]+"</td></tr><tr><td>Site</td><td>Umayri</td></tr><tr><td>Field</td><td>"+data.rows[i].value[2]+"</td></tr><tr><td>Square</td><td>"+data.rows[i].value[3]+"</td></tr><tr><td>Code</td><td>"+data.rows[i].value[4]+"</td></tr><tr><td>Locus_type</td><td>"+data.rows[i].value[5]+"</td><tr><td>Supervisor</td><td>"+data.rows[i].value[6]+"</td></tr><tr><td>Designation</td><td>"+data.rows[i].value[7]+"</td></tr><tr><td>Reason</td><td>"+data.rows[i].value[8]+"</td></tr><tr><td>Top Separability</td><td>"+data.rows[i].value[9]+"</td></tr><tr><td>Bottom Separability</td><td>"+data.rows[i].value[10]+"</td></tr><tr><td>Interpretation</td><td></td></tr><tr><td>Stratigraphy</td><td>"+data.rows[i].value[11]+"</td></tr><tr><td>Locus date</td><td>"+data.rows[i].value[12]+"</td></tr><tr><td>Top Plans</td><td>"+data.rows[i].value[13]+"</td></tr><tr><td>Draw balks</td><td>"+data.rows[i].value[14]+"</td></tr>");
                 }
             }
             
@@ -263,16 +267,7 @@ function display_pails_info(id){
             if(data.rows[i].key==key[1]){
               
                 for(j=0;j<data.rows[i].value.length;j++){
-                    
-                  if(data.rows[i].value[j].pottery_location==null){
-                      
-                      data.rows[i].value[j].pottery_location=" ";
-                  }
-                  if(data.rows[i].value[j].pottery_comments==null){
-                      
-                      data.rows[i].value[j].pottery_comments=" ";
-                  }                 
-                      
+                                       
                     $("#table_pails").append("<tr><td>"+data.rows[i].value[j].pail_date+"</td><td>"+data.rows[i].value[j].pail_number+"</td><td>"+data.rows[i].value[j].baskets+"</td><td>"+data.rows[i].value[j].diagnostic_count+"</td><td>"+data.rows[i].value[j].publish+"</td><td>"+data.rows[i].value[j].total_count+"</td><td>"+data.rows[i].value[j].pottery_location+"</td><td>"+data.rows[i].value[j].pottery_comments+"</td></tr>");
                 }
                 
@@ -292,20 +287,23 @@ function display_photos_info(id){
     db.view("Opendig_v2/byphotos",{
         success: function(data){
             
-        
+        //$("#photos_list").empty();
         var key=id.split('_');
        
         for(i in data.rows){
             
             if(data.rows[i].key==key[1]){
-              
-                $("#photos_list").append('<li><a href="http://128.54.59.236/photos/work.gif" rel="prettyPhoto[gallery2]" title="How is the description on that one? How is the description on that one? How is the description on that one? "><img src="http://128.54.59.236/photos/work.gif" width="60" height="60" alt="This is a pretty long title" /></a></li>'); 
+                              
                 for(j=0;j<data.rows[i].value.length;j++){
-                      
                     
+                    $("#photos_list").append('<li><a href="http://127.0.0.1/photos/5.jpg" rel="lightbox" ><img class="image" src="http://127.0.0.1/photos/5.jpg" /></a><p>'+data.rows[i].value[j].date+'</p></li>'); 
+                   
                 }
-                
+                             
             }
+            
+            
+            
         }
             
         },
@@ -315,10 +313,60 @@ function display_photos_info(id){
         reduce: false
     });
     
+   
+        
+     
+        
+    
+   
+    
+}
+
+function display_artifacts_info(id){
+    db.view("Opendig_v2/byartifacts",{
+        success: function(data){
+           
+        $("#tab7").append("<h2>Artifacts</h2>");
+        $("#tab7").append("<table id='table_artifacts'></table> ");
+        $("#table_artifacts").append("<tr><th>Registration</th><th>Description</th><th>Quantity</th><th>Certainty</th><th>Comment</th>");
+        var key=id.split('_');
+       
+        for(i in data.rows){
+           
+            if(data.rows[i].key==key[1]){
+              
+                for(j=0;j<data.rows[i].value.length;j++){
+                                       
+                    $("#table_artifacts").append("<tr><td>"+data.rows[i].value[j].registration+"</td><td>description</td><td>"+data.rows[i].value[j].count+"</td><td>Certainty</td><td>"+data.rows[i].value[j].comments+"</td></tr>");
+                }
+                
+            }
+        }
+            
+        },
+        error: function(status){
+            $("#tab7").append("<p>The status is "+status+" in displaying artifacts information</p>");
+        },
+        reduce: false
+    });
+    
 }
 
 
+/*function print_photos(id){
+    display_photos_info(id);
+    
+    alert('outside'+photos_arr.length);
+    for(j=0; j<photos_arr.length; j++){
+        $("#photos_list").append('<li><a href="http://127.0.0.1/photos/5.jpg" rel="lightbox" ><img class="image" src="http://127.0.0.1/photos/5.jpg" /></a></li>');  
+    }
+}
+*/
+
+
 $(document).ready(function (){
+    
+    
     
     display_fields();
     
@@ -366,7 +414,7 @@ $(document).ready(function (){
         else{
             $("#"+$(this).attr('id')).hide();
         }
-        
+			
         
                                               });
                                               
@@ -391,7 +439,7 @@ $(document).ready(function (){
              
         
             var $links = $(this).find('a');
-            var $links2=$("#tab2");
+            var $links2=$("#tab1");
             
             $active.removeClass('active');
             $active = $links2.addClass('active');
@@ -408,7 +456,7 @@ $(document).ready(function (){
             
             //TEST Active tabs
         for(i=0;i<$links.length;i++){
-            if($links[i].getAttribute('href') != '#tab2'){
+            if($links[i].getAttribute('href') != '#tab1'){
                 $($links[i].getAttribute('href')).removeClass('active');
                 $($links[i].getAttribute('href')).hide();
             }
@@ -426,7 +474,17 @@ $(document).ready(function (){
         display_stratigraphies_info(id);        
         $("#tab4").empty();        
         display_pails_info(id);
-        display_photos_info(id);
+        
+        //alert('array size is: '+arr.length);
+        //print_photos(id);
+        /*$("#tab5").load(function(){
+            alert('entered');
+            display_photos_info(id);
+            
+        });*/
+       $("#tab7").empty();
+       display_artifacts_info(id);
+        event.preventDefault();
     });
     
 
@@ -556,23 +614,7 @@ e.preventDefault();
 				});
 
 
-//Photo gallery code (khalied)
 
-
-//$(".gallery:first a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'normal',theme:'light_square',slideshow:3000, autoplay_slideshow: true});
-$(".gallery:gt(0) a[rel^='prettyPhoto']").prettyPhoto({animation_speed:'fast',slideshow:10000, hideflash: true});
-		
-$("#custom_content a[rel^='prettyPhoto']:first").prettyPhoto({
-custom_markup: '<div id="map_canvas" style="width:260px; height:265px"></div>',
-changepicturecallback: function(){ initialize(); }
-});
-
-$("#custom_content a[rel^='prettyPhoto']:last").prettyPhoto({
-custom_markup: '<div id="bsap_1259344" class="bsarocks bsap_d49a0984d0f377271ccbf01a33f2b6d6"></div><div id="bsap_1237859" class="bsarocks bsap_d49a0984d0f377271ccbf01a33f2b6d6" style="height:260px"></div><div id="bsap_1251710" class="bsarocks bsap_d49a0984d0f377271ccbf01a33f2b6d6"></div>',
-changepicturecallback: function(){ _bsap.exec(); }
-});
-
-//here Ends photo gallerie code
 
 });
 
